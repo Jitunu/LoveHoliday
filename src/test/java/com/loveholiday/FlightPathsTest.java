@@ -1,5 +1,5 @@
-import com.loveholiday.FlightPaths;
-import org.junit.jupiter.api.BeforeAll;
+package com.loveholiday;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,25 +11,21 @@ import java.util.List;
 import java.util.Map;
 
 public class FlightPathsTest {
-    int[][] costsArr;
-    Map<String, Integer> locationMap;
-    FlightPaths flightPaths;
+    private static final int[][] costsArr;
+    private static final Map<String, Integer> locationMap = new HashMap<>();
+    private static final FlightPaths flightPaths;
 
-    @BeforeEach
-    public void init() {
+    static {
+        locationMap.put("Castle Black", 0);
+        locationMap.put("Winterfell", 1);
+        locationMap.put("Riverrun", 2);
+        locationMap.put("King's Landing", 3);
         costsArr = new int[][]{
                 {0, 15, 80, 90},
                 {0, 0, 40, 50},
                 {0, 0, 0, 70},
                 {0, 0, 0, 0}
         };
-
-        locationMap = new HashMap<>() {{
-            put("Castle Black", 0);
-            put("Winterfell", 1);
-            put("Riverrun", 2);
-            put("King's Landing", 3);
-        }};
         flightPaths = new FlightPaths(costsArr, locationMap);
     }
 
@@ -43,7 +39,7 @@ public class FlightPathsTest {
 
     @Test
     @DisplayName("Source: Castle Black and Destination: King's Landing")
-    public void invalidInput() {
+    public void testFindFlightPaths() {
 
         List<String> paths = flightPaths.findFlightCosts("Castle Black", "King's Landing");
         assertTrue(paths.contains("Castle Black -> Winterfell -> Riverrun -> King's Landing: 125"));
@@ -51,4 +47,21 @@ public class FlightPathsTest {
         assertTrue(paths.contains("Castle Black -> Riverrun -> King's Landing: 150"));
         assertTrue(paths.contains("Castle Black -> King's Landing: 90"));
     }
+
+    @Test
+    @DisplayName("Source: King's Landing and Destination: Castle Black")
+    public void testNoValidFlightPaths() {
+
+        List<String> paths = flightPaths.findFlightCosts("King's Landing", "Castle Black");
+        assertEquals(0, paths.size());
+    }
+
+    @Test
+    @DisplayName("Source: Castle Black and Destination: Castle Black")
+    public void testSameSourceAndDestinationFlightPaths() {
+
+        List<String> paths = flightPaths.findFlightCosts("Castle Black", "Castle Black");
+        assertTrue(paths.contains("Castle Black: 0"));
+    }
+
 }

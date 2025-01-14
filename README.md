@@ -92,4 +92,4 @@ Error: Invalid location name. Please provide valid source and destination.
 ## Testing
 ### Unit Tests
 
-Test cases are in FlightPathsTest.java in test directory using JUnit5. Ensure JUnit5 is set up in your environment.
+Test cases are in com.loveholiday.FlightPathsTest.java in test directory using JUnit5. Ensure JUnit5 is set up in your environment.

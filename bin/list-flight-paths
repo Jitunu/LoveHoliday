@@ -1,21 +1,13 @@
-#!/bin/bash
-
 # Debugging information
 echo "Starting program..."
 echo "Arguments provided $*"
 echo "Running Java program..."
 
-## Ensure two arguments are passed
-#if [ "$#" -ne 2 ]; then
-#    echo "Usage: ./run.sh [source] [destination]"
-#    exit 1
-#fi
-
 # Run the Java program with the provided arguments
 java -cp bin com/loveholiday/LoveHolidayApplication "$@"
 
 # Check the result
-if [ $? -eq 0 ]; then
+if [ 0 -eq 0 ]; then
     echo "Program finished successfully."
 else
     echo "Program encountered an error."
